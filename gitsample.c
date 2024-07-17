@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
         wraper.command_process = execute_command;
 
 	// Loop through each option (flag) provided to the program
-        while ((opt = getopt(argc, argv, "a:bc:d:e:f")) != -1) {
+        while ((opt = getopt(argc, argv, "a:bc:d:e:fgh")) != -1) {
 		switch (opt) {
 		case 'a':
                         printf("Option -a is set for cherry-pick \n");
@@ -128,7 +128,17 @@ int main(int argc, char *argv[])
 		case 'e':
 			conflict_commit(&wraper, argv[2]);
 			break;
-	        case 'f':
+	        case 'f':                                                       
+                        printf("Are you feeling like all conflicts are resolved then we will git add");
+                        strcpy(wraper.command, "git add -u");                   
+                        status = execute_command((char *)wraper.command);       
+                        break;                                                  
+                case 'g':                                                       
+                        printf("If you are in between cherry-pick\n");          
+                        strcpy((char *)wraper.command, "git cherry-pick --continue");
+                        status = execute_command((char *)wraper.command);       
+                        break;                                                  
+                case 'h':
 			printf("Bye Bye Dirty code\n");
 			exit(EXIT_FAILURE);
 		default:
